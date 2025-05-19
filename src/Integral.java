@@ -60,4 +60,8 @@ public class Integral {
 //        integral.simpsonMethod(12);
 //        integral.quadratureMethod(12,false);
 //    }
+//    public static void main(String[] args) {
+//        Integral integral = new Integral(-1,1,x -> 0.5 * ( 3 * Math.pow(x,2) - 1) * Math.sqrt(3 * Math.pow(x, 3) -x + 5));
+//        System.out.println(integral.trapezoidMethod(100));
+//    }
 }

@@ -1,13 +1,12 @@
 import com.google.common.base.Function;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Approximation {
-    private double a;
-    private double b;
-    private int n;
-    private Function<Double, Double> mathFunction;
+    private final double a;
+    private final double b;
+    private final int n;
+    private final Function<Double, Double> mathFunction;
 
     public Approximation(double a, double b, int n, Function<Double, Double> mathFunction) {
         this.a = a;
@@ -18,10 +17,10 @@ public class Approximation {
 
     public void smallestSquares(double []x, int n, int m, double vx) {
         Matrix result = new Matrix(n + 1);
-        double [] y = new double[m + 1];
+        double [] y = new double[m];
         fillYs(y,x);
         result = fillMatrix(result, x, n, m);
-        result = fillLastColumn(result, x, y, n, m);
+        result = fillLastColumn(result, x, y, m);
         result.oblicz();
         double sum = 0;
         for (int i = 0; i < result.wyniki.length; i++) {
@@ -44,7 +43,7 @@ public class Approximation {
         }
         return matrix;
     }
-    private Matrix fillLastColumn(Matrix matrix, double [] x, double [] y, int n, int m) {
+    private Matrix fillLastColumn(Matrix matrix, double [] x, double [] y, int m) {
         int lastColumn = matrix.kolumny - 1;
         for (int i = 0; i < matrix.wiersze; i++) {
             double result;
@@ -94,6 +93,7 @@ public class Approximation {
             Function<Double, Double> mul = x -> wielomians.get(index).apply(x) * mathFunction.apply(x);
             cN.add(Math.pow(lambdas.get(i),-1) * new Integral(a, b, mul).trapezoidMethod(100));
         }
+        System.out.println(cN);
         double result = 0;
         for (int i = 0; i < cN.size(); i++) {
             result += cN.get(i) * wielomians.get(i).apply(vx);
@@ -135,12 +135,13 @@ public class Approximation {
         }
         return matrix;
     }
-
     public static void main(String[] args) {
-        Approximation approximation1 = new Approximation(-1,1,2,x -> Math.sqrt(3 * Math.pow(x, 3) -x + 5));
+        Approximation approximation1 = new Approximation(-1,1,2,x -> Math.sqrt(3 * Math.pow(x, 3) - x + 5));
         approximation1.leastSquaresApproximation(0.25);
         approximation1.wielomiansOrthogonal(0.25);
-        approximation1.smallestSquares(new double[]{-1, -0.5, 0, 0.5, 1}, 2, 4, 0.25);
+        approximation1.smallestSquares(new double[]{-1, -0.5, 0, 0.5, 1}, 2, 5, 0.25);
+//        Approximation approximation2 = new Approximation(-1,1,2,x -> Math.sqrt(3 * Math.pow(x, 3) + 5));
+//        approximation2.wielomiansOrthogonal(0.25);
     }
 }
 
