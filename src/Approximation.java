@@ -21,8 +21,8 @@ public class Approximation {
         fillYs(y,x);
         result = fillMatrix(result, x, n, m);
         result = fillLastColumn(result, x, y, m);
-        //result.wypisz();
         result.oblicz();
+        result.wypisz();
         double sum = 0;
         for (int i = 0; i < result.wyniki.length; i++) {
             sum += result.wyniki[i] * Math.pow(vx, i);
@@ -137,10 +137,10 @@ public class Approximation {
         return matrix;
     }
     public static void main(String[] args) {
-        Approximation approximation1 = new Approximation(-1,1,3,x -> Math.sqrt(3 * Math.pow(x, 3) - x + 5));
+        Approximation approximation1 = new Approximation(-1,1,3,x -> Math.sqrt(3 * Math.pow(x, 3) + 5));
         approximation1.leastSquaresApproximation(0.25);
         approximation1.wielomiansOrthogonal(0.25);
-        approximation1.smallestSquares(new double[]{-1, -0.5, 0, 0.5, 1}, 5, 0.25);
+        approximation1.smallestSquares(new double[]{-1, -0.5, 0, 0.5, 1}, 4, 0.25);
     }
 }
 
