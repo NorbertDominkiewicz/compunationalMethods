@@ -77,9 +77,56 @@ public class Matrix {
         }
     }
 
+    public double[] iteracjaProsta(double epsilon, int maxIter) {
+        double[] x = new double[wiersze];
+        double[] nxt = new double[wiersze];
+        double[] g = new double[wiersze];
+        double[][] h = new double[wiersze][wiersze];
+        for (int i = 0; i < wiersze; i++) {
+            g[i] = tab[i][kolumny - 1] / tab[i][i];
+            for (int j = 0; j < wiersze; j++) {
+                if (i != j) {
+                    h[i][j] = -tab[i][j] / tab[i][i];
+                } else {
+                    h[i][j] = 0;
+                }
+            }
+            x[i] = g[i];
+        }
+        int n = 0;
+        boolean czyStopujemy = false;
+        while (n < maxIter && !czyStopujemy) {
+            czyStopujemy = true;
+            for (int i = 0; i < wiersze; i++) {
+                nxt[i] = g[i];
+                for (int j = 0; j < wiersze; j++) {
+                    nxt[i] += h[i][j] * x[j];
+                }
+            }
+            for (int i = 0; i < wiersze; i++) {
+                if (Math.abs(nxt[i] - x[i]) > epsilon) {
+                    czyStopujemy = false;
+                }
+                x[i] = nxt[i];
+            }
+            n++;
+        }
+
+        System.out.println("Iteracje: " + n);
+        return x;
+    }
+
+
     public static void main(String[] args) {
-        Matrix matrix = new Matrix(5);
-        matrix.wypisz();
+        Matrix m = new Matrix(new double[][] {
+                {10, 1, 1, 12},
+                {2, 8, 1, 11},
+                {1, 2, 6, 9}
+        });
+        double[] rozw = m.iteracjaProsta(0.005, 15);
+        for (int i = 0; i < rozw.length; i++) {
+            System.out.println(rozw[i]);
+        }
     }
 
 }

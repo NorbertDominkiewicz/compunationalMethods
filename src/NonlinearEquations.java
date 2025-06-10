@@ -71,6 +71,8 @@ public class NonlinearEquations {
             } else {
                 xn = b;
             }
+            System.out.println(derFuncution2.apply(a) * mathFuncution.apply(a));
+            System.out.println(xn);
             int n = 0;
             while (true) {
                 n++;
@@ -126,9 +128,9 @@ public class NonlinearEquations {
     }
 
     public static void main(String[] args) {
-        NonlinearEquations nq = new NonlinearEquations(-4, -1, x -> 12 * Math.pow(x, 2) - 6 * x - 32, x -> 24 * x - 6, x -> 24.0);
-        nq.bisectionMethod(0.0001);
-        nq.secantMethod(0.02);
-        nq.newtonMethod(0.0001);
+        NonlinearEquations nq = new NonlinearEquations(-6, -1, x -> 6 * Math.pow(x, 2) + 6 * x - 36, x -> 12 * x + 6, x -> 12.0);
+//        nq.bisectionMethod(0.0001);
+//        nq.secantMethod(0.02);
+        nq.newtonMethod(0.01);
     }
 }
